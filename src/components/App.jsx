@@ -18,6 +18,20 @@ export class App extends Component {
     //   ],
   };
 
+  componentDidMount() {
+    const savedContracts = JSON.parse(localStorage.getItem('contacts'));
+
+    if (savedContracts.length > 0) {
+      this.setState({ contacts: savedContracts });
+    }
+  }
+
+  componentDidUpdate(_, prevState) {
+    if (prevState.contacts !== this.state.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
+
   handleChangeFilter = evt => {
     const { name, value } = evt.target;
     this.setState({ [name]: value });
